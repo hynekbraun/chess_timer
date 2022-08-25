@@ -19,8 +19,9 @@ import com.hynekbraun.chesstimer.ui.theme.ChessTimerTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
             val viewModel by viewModels<TimerViewModel>()
+
+        setContent {
             ChessTimerTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
