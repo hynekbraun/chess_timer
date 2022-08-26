@@ -49,6 +49,9 @@ android {
 
 dependencies {
 
+    //Navigation
+    implementation "androidx.hilt:hilt-navigation-compose:$nav_version"
+
     //Room dependency
     implementation "androidx.room:room-runtime:$room_version"
     implementation "androidx.room:room-ktx:$room_version"

@@ -14,8 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.hynekbraun.chesstimer.CurrentTurn
 import com.hynekbraun.chesstimer.TimerViewModel
-import com.hynekbraun.chesstimer.presentation.composables.MiddleBar
-import com.hynekbraun.chesstimer.presentation.composables.TapField
+import com.hynekbraun.chesstimer.presentation.timer.composables.MiddleBar
+import com.hynekbraun.chesstimer.presentation.timer.composables.TapField
 import com.hynekbraun.chesstimer.ui.theme.ChessTimerTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -31,42 +31,6 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    Column(modifier = Modifier.fillMaxSize()) {
-                        TapField(
-                            textColor = Color.Black,
-                            modifier = Modifier
-                                .weight(2f)
-                                .fillMaxWidth()
-                                .background(Color.White),
-                            rotation = -180f,
-                            onFieldClick = {
-                                if (viewModel.currentTurn != CurrentTurn.TWO)
-                                    viewModel.startTimer()
-                            },
-                            time = viewModel.time1AsString.value
-                        )
-                        MiddleBar(
-                            isActive = false,
-                            onSettingsClicked = {},
-                            onPauseClicked = {},
-                            onResetClicked = {
-                                viewModel.resetTimer()
-                            },
-                            modifier = Modifier.weight(1f)
-                        )
-                        TapField(
-                            textColor = Color.White,
-                            modifier = Modifier
-                                .weight(2f)
-                                .fillMaxWidth()
-                                .background(Color.Black),
-                            onFieldClick = {
-                                if (viewModel.currentTurn != CurrentTurn.ONE)
-                                    viewModel.startTimer()
-                            },
-                            time = viewModel.time2AsString.value
-                        )
-                    }
                 }
             }
         }
