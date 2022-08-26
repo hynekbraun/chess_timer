@@ -1,4 +1,4 @@
-package com.hynekbraun.chesstimer
+package com.hynekbraun.chesstimer.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -12,10 +12,14 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import com.hynekbraun.chesstimer.composables.MiddleBar
-import com.hynekbraun.chesstimer.composables.TapField
+import com.hynekbraun.chesstimer.CurrentTurn
+import com.hynekbraun.chesstimer.TimerViewModel
+import com.hynekbraun.chesstimer.presentation.composables.MiddleBar
+import com.hynekbraun.chesstimer.presentation.composables.TapField
 import com.hynekbraun.chesstimer.ui.theme.ChessTimerTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

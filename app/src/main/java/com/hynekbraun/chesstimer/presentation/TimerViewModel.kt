@@ -4,11 +4,13 @@ import android.os.CountDownTimer
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import java.util.concurrent.TimeUnit
 
 private const val COUNTDOWN_INTERVAL = 1000L
 private const val START_TIME_LONG = 30000L
 
+@HiltViewModel
 class TimerViewModel : ViewModel() {
 
     var currentTurn = CurrentTurn.NOBODY
