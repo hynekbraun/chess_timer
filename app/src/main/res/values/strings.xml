@@ -4,4 +4,7 @@
     <string name="content_desc_settings">Settings button</string>
     <string name="content_desc_play">Play button</string>
     <string name="content_desc_reset">Reset button</string>
+    <string name="content_desc_add_time">Add new time</string>
+    <string name="content_desc_delete_time">Delete time</string>
+    <string name="empty_time_settings">No saved time option</string>
 </resources>

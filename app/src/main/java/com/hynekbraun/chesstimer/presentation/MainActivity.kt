@@ -12,10 +12,12 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.navigation.compose.rememberNavController
 import com.hynekbraun.chesstimer.CurrentTurn
 import com.hynekbraun.chesstimer.TimerViewModel
-import com.hynekbraun.chesstimer.presentation.composables.MiddleBar
-import com.hynekbraun.chesstimer.presentation.composables.TapField
+import com.hynekbraun.chesstimer.presentation.navigation.TimerNavGraph
+import com.hynekbraun.chesstimer.presentation.timer.composables.MiddleBar
+import com.hynekbraun.chesstimer.presentation.timer.composables.TapField
 import com.hynekbraun.chesstimer.ui.theme.ChessTimerTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -23,50 +25,15 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-            val viewModel by viewModels<TimerViewModel>()
-
         setContent {
+            val navController = rememberNavController()
+
             ChessTimerTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    Column(modifier = Modifier.fillMaxSize()) {
-                        TapField(
-                            textColor = Color.Black,
-                            modifier = Modifier
-                                .weight(2f)
-                                .fillMaxWidth()
-                                .background(Color.White),
-                            rotation = -180f,
-                            onFieldClick = {
-                                if (viewModel.currentTurn != CurrentTurn.TWO)
-                                    viewModel.startTimer()
-                            },
-                            time = viewModel.time1AsString.value
-                        )
-                        MiddleBar(
-                            isActive = false,
-                            onSettingsClicked = {},
-                            onPauseClicked = {},
-                            onResetClicked = {
-                                viewModel.resetTimer()
-                            },
-                            modifier = Modifier.weight(1f)
-                        )
-                        TapField(
-                            textColor = Color.White,
-                            modifier = Modifier
-                                .weight(2f)
-                                .fillMaxWidth()
-                                .background(Color.Black),
-                            onFieldClick = {
-                                if (viewModel.currentTurn != CurrentTurn.ONE)
-                                    viewModel.startTimer()
-                            },
-                            time = viewModel.time2AsString.value
-                        )
-                    }
+                    TimerNavGraph(navController = navController)
                 }
             }
         }
