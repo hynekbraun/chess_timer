@@ -12,8 +12,10 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.navigation.compose.rememberNavController
 import com.hynekbraun.chesstimer.CurrentTurn
 import com.hynekbraun.chesstimer.TimerViewModel
+import com.hynekbraun.chesstimer.presentation.navigation.TimerNavGraph
 import com.hynekbraun.chesstimer.presentation.timer.composables.MiddleBar
 import com.hynekbraun.chesstimer.presentation.timer.composables.TapField
 import com.hynekbraun.chesstimer.ui.theme.ChessTimerTheme
@@ -23,14 +25,15 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-            val viewModel by viewModels<TimerViewModel>()
-
         setContent {
+            val navController = rememberNavController()
+
             ChessTimerTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
+                    TimerNavGraph(navController = navController)
                 }
             }
         }

@@ -19,7 +19,7 @@ fun TimerScreen(
     viewModel: TimerViewModel = viewModel(),
     onSettingsClicked: () -> Unit
 ) {
-    Column(modifier = modifier.fillMaxSize()) {
+    Column(modifier = modifier) {
         TapField(
             textColor = Color.Black,
             modifier = Modifier
@@ -35,7 +35,7 @@ fun TimerScreen(
         )
         MiddleBar(
             isActive = false,
-            onSettingsClicked = {},
+            onSettingsClicked = { onSettingsClicked()},
             onPauseClicked = {},
             onResetClicked = {
                 viewModel.resetTimer()
