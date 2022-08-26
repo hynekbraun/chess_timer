@@ -1,4 +1,4 @@
-package com.hynekbraun.chesstimer.composables
+package com.hynekbraun.chesstimer.presentation.composables
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon

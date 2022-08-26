@@ -4,12 +4,15 @@ import android.os.CountDownTimer
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
 private const val COUNTDOWN_INTERVAL = 1000L
 private const val START_TIME_LONG = 30000L
 
-class TimerViewModel : ViewModel() {
+@HiltViewModel
+class TimerViewModel @Inject constructor() : ViewModel() {
 
     var currentTurn = CurrentTurn.NOBODY
         private set
