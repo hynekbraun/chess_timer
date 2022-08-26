@@ -7,7 +7,8 @@ import com.hynekbraun.chesstimer.data.local.TimeDatabase.Companion.DATABASE_VERS
 
 @Database(
     entities = [TimeEntity::class],
-    version = DATABASE_VERSION
+    version = DATABASE_VERSION,
+    exportSchema = false
 )
 abstract class TimeDatabase: RoomDatabase() {
 
