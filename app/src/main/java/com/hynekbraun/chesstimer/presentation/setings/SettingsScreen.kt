@@ -20,14 +20,15 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 fun SettingsScreen(
     modifier: Modifier = Modifier,
     timeList: List<TimeModel> = emptyList(),
-    viewModel: SettingsViewModel = viewModel()
+    viewModel: SettingsViewModel = viewModel(),
+    addTimerClicked: () -> Unit
 ) {
     val scaffoldState = rememberScaffoldState()
 
     Scaffold(
         modifier = modifier, scaffoldState = scaffoldState,
         floatingActionButton = {
-            FloatingActionButton(onClick = { /* Add ime dialog or screen */ }) {
+            FloatingActionButton(onClick = {addTimerClicked()}) {
                 Icon(
                     imageVector = Icons.Default.Add,
                     contentDescription = stringResource(R.string.content_desc_add_time)
@@ -62,7 +63,7 @@ fun SettingsScreenPreview() {
         TimeModel(0, "asdasd", 0L, 0L),
     )
     Surface(modifier = Modifier.fillMaxSize()) {
-        SettingsScreen(timeList = dummyList)
+        SettingsScreen(timeList = dummyList, addTimerClicked = {})
     }
 }
 
