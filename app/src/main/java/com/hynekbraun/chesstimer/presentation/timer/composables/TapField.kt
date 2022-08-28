@@ -22,7 +22,7 @@ import com.hynekbraun.chesstimer.R
 @Composable
 fun TapField(
     modifier: Modifier = Modifier,
-    time: String = stringResource(R.string.time_zero),
+    time: String = stringResource(R.string.time_placeholder_zero_zero),
     textColor: Color,
     rotation: Float = 0f,
     onFieldClick: () -> Unit

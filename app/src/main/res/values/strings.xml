@@ -1,16 +1,30 @@
 <resources>
     <string name="app_name">Chess Timer</string>
-    <string name="time_zero">00:00</string>
+
+    //Placeholders
+    <string name="time_placeholder_zero_zero">00:00</string>
+    <string name="time_placeholder_zero">00</string>
+
+    //Content desc
     <string name="content_desc_settings">Settings button</string>
     <string name="content_desc_play">Play button</string>
     <string name="content_desc_reset">Reset button</string>
     <string name="content_desc_add_time">Add new time</string>
     <string name="content_desc_delete_time">Delete time</string>
-    <string name="empty_time_settings">No saved time option</string>
+
+    //General use
     <string name="hours">Hours</string>
     <string name="minutes">Minutes</string>
     <string name="seconds">Seconds</string>
     <string name="name">Name</string>
+
+    //Add timer screen
     <string name="add_timer_screen_start_time">Starting time</string>
     <string name="add_timer_screen_increment">Increment</string>
+
+    //Empty screen
+    <string name="empty_time_settings">No saved time option</string>
+
+    //to sort
+
 </resources>

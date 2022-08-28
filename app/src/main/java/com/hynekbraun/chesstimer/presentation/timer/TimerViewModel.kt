@@ -5,11 +5,10 @@ import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 private const val COUNTDOWN_INTERVAL = 1000L
-private const val START_TIME_LONG = 30000L
+private const val START_TIME_LONG = 300000000L
 
 @HiltViewModel
 class TimerViewModel @Inject constructor() : ViewModel() {
@@ -133,9 +132,10 @@ class TimerViewModel @Inject constructor() : ViewModel() {
 
     private fun longToString(time: Long): String {
 
-        val minutes = TimeUnit.MILLISECONDS.toMinutes(time)
-        val seconds = TimeUnit.MILLISECONDS.toSeconds(time) % 60
-        return String.format("%02d:%02d", minutes, seconds)
+        val seconds = (time / 1000) % 60
+        val minutes = (time / (1000 * 60) % 60)
+        val hours = (time / (1000 * 60 * 60) % 24)
+        return String.format("%02d:%02d:%02d", hours, minutes, seconds)
     }
 }
 
