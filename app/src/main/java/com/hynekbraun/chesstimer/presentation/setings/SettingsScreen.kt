@@ -19,11 +19,11 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 @Composable
 fun SettingsScreen(
     modifier: Modifier = Modifier,
-    timeList: List<TimeModel> = emptyList(),
     viewModel: SettingsViewModel = viewModel(),
     addTimerClicked: () -> Unit
 ) {
     val scaffoldState = rememberScaffoldState()
+    val state = viewModel.viewState
 
     Scaffold(
         modifier = modifier, scaffoldState = scaffoldState,
@@ -37,11 +37,11 @@ fun SettingsScreen(
         },
         floatingActionButtonPosition = FabPosition.End
     ) {
-        if (timeList.isEmpty()) {
+        if (state.list.isEmpty()) {
             EmptyScreen()
         } else {
             LazyColumn {
-                items(timeList) { time ->
+                items(state.list) { time ->
                     TimeItem(time = time) {
                     }
                 }
@@ -49,21 +49,3 @@ fun SettingsScreen(
         }
     }
 }
-
-@Preview
-@Composable
-fun SettingsScreenPreview() {
-    val dummyList = listOf(
-        TimeModel(0, "asdasd", 0L, 0L),
-        TimeModel(0, "asdasd", 0L, 0L),
-        TimeModel(0, "asdasd", 0L, 0L),
-        TimeModel(0, "asdasd", 0L, 0L),
-        TimeModel(0, "asdasd", 0L, 0L),
-        TimeModel(0, "asdasd", 0L, 0L),
-        TimeModel(0, "asdasd", 0L, 0L),
-    )
-    Surface(modifier = Modifier.fillMaxSize()) {
-        SettingsScreen(timeList = dummyList, addTimerClicked = {})
-    }
-}
-
