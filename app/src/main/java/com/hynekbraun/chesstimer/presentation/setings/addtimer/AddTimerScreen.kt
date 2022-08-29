@@ -16,7 +16,8 @@ import com.hynekbraun.chesstimer.presentation.setings.addtimer.util.AddTimerEven
 @Composable
 fun AddTimerScreen(
     modifier: Modifier = Modifier,
-    viewModel: AddTimerViewModel = viewModel()
+    viewModel: AddTimerViewModel = viewModel(),
+    onNavigateBack: () -> Unit
 ) {
     val viewState = viewModel.timerState
     Column(modifier = modifier.padding(8.dp)) {
@@ -78,8 +79,10 @@ fun AddTimerScreen(
         }
         Spacer(modifier = Modifier.height(8.dp))
 
-        Button(onClick = { viewModel.onEvent(AddTimerEvent.SaveTime) }) {
-
+        Button(onClick = {
+            viewModel.onEvent(AddTimerEvent.SaveTime)
+            onNavigateBack()
+        }) {
         }
     }
 }
@@ -88,6 +91,6 @@ fun AddTimerScreen(
 @Composable
 fun AddTimerScreenPreview() {
     Surface(modifier = Modifier.fillMaxSize()) {
-        AddTimerScreen()
+        AddTimerScreen(onNavigateBack = {})
     }
 }

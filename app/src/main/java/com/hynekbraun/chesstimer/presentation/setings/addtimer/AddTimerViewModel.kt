@@ -67,6 +67,7 @@ class AddTimerViewModel @Inject constructor(
             repository.insertTime(
                 TimeModel(
                     id = 0,
+                    // FIXME there should be string resource
                     name = if (name.isBlank()) "Timer" else timerState.name,
                     timeStart = timeStart,
                     timeGain = timeIncrement
