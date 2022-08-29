@@ -15,7 +15,7 @@ object DatabaseModule {
 
     @Provides
     @Singleton
-    fun provideMoviesDatabase(@ApplicationContext context: Context): TimeDatabase =
+    fun provideTimeDatabase(@ApplicationContext context: Context): TimeDatabase =
         Room.databaseBuilder(
             context,
             TimeDatabase::class.java,
@@ -25,5 +25,5 @@ object DatabaseModule {
             .build()
 
     @Provides
-    fun provideMoviesDao(database: TimeDatabase): TimeDao = database.getTimeDao()
+    fun provideTimeDao(database: TimeDatabase): TimeDao = database.getTimeDao()
 }

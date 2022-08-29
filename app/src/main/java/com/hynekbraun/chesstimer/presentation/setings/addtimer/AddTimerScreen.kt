@@ -1,10 +1,7 @@
 package com.hynekbraun.chesstimer.presentation.setings.addtimer
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,15 +18,12 @@ fun AddTimerScreen(
     modifier: Modifier = Modifier,
     viewModel: AddTimerViewModel = viewModel()
 ) {
-    var text by remember {
-        mutableStateOf("")
-    }
     val viewState = viewModel.timerState
     Column(modifier = modifier.padding(8.dp)) {
         TextField(
             modifier = Modifier.fillMaxWidth(),
-            value = text,
-            onValueChange = { text = it },
+            value = viewState.name,
+            onValueChange = { viewModel.onEvent(AddTimerEvent.ChangeName(it)) },
             placeholder = { Text(text = stringResource(R.string.name)) },
             singleLine = true
         )
@@ -81,6 +75,11 @@ fun AddTimerScreen(
                 value = viewState.incrementSeconds,
                 measurement = stringResource(R.string.seconds)
             )
+        }
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Button(onClick = { viewModel.onEvent(AddTimerEvent.SaveTime) }) {
+
         }
     }
 }
