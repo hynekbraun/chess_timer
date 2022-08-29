@@ -16,13 +16,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.hynekbraun.chesstimer.R
 import com.hynekbraun.chesstimer.domain.TimeModel
+import com.hynekbraun.chesstimer.presentation.setings.util.SettingsModel
 
 //Later add checkbox to see chosen time
 
 @Composable
 fun TimeItem(
     modifier: Modifier = Modifier,
-    time: TimeModel,
+    time: SettingsModel,
     onDelete: () -> Unit
 ) {
     Row(
@@ -66,11 +67,11 @@ fun TimeItem(
 fun TimeItemPreview() {
     Box(modifier = Modifier.fillMaxSize()) {
         TimeItem(
-            time = TimeModel(
+            time = SettingsModel(
                 id = 0,
                 name = "Some name asd as dasd as d",
-                timeStart = 200L,
-                timeGain = 200L
+                timeStart = "00:00:00",
+                timeGain = "00:00:00"
             )
         ) {
         }

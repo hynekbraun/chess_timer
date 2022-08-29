@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hynekbraun.chesstimer.domain.TimeModel
 import com.hynekbraun.chesstimer.domain.TimeRepository
+import com.hynekbraun.chesstimer.domain.toSettingsModel
 import com.hynekbraun.chesstimer.presentation.setings.util.SettingsEvent
 import com.hynekbraun.chesstimer.presentation.setings.util.SettingsState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,7 +25,7 @@ class SettingsViewModel @Inject constructor(
 
     fun onEvent(event: SettingsEvent){
         when (event){
-            is SettingsEvent.OnDelete -> deleteTime(event.time)
+            is SettingsEvent.OnDelete -> deleteTime(event.id)
             is SettingsEvent.OnTimeSelected -> {}
         }
     }
@@ -33,16 +34,16 @@ class SettingsViewModel @Inject constructor(
         observeTime()
     }
 
-    private fun deleteTime(time: TimeModel){
+    private fun deleteTime(id: Int){
         viewModelScope.launch {
-            repository.deleteTime(time)
+            repository.deleteTime(id)
         }
     }
 
     private fun observeTime() {
         viewModelScope.launch {
             repository.getTime().collect { times ->
-                viewState = viewState.copy(list = times)
+                viewState = viewState.copy(list = times.map { it.toSettingsModel() })
             }
         }
     }

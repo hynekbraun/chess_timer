@@ -1,6 +1,8 @@
 package com.hynekbraun.chesstimer.domain
 
 import com.hynekbraun.chesstimer.data.local.TimeEntity
+import com.hynekbraun.chesstimer.presentation.setings.util.SettingsModel
+import com.hynekbraun.chesstimer.presentation.toTimeString
 
 data class TimeModel(
     val id: Int,
@@ -17,3 +19,13 @@ fun TimeModel.toEntity(): TimeEntity {
         timeGain = timeGain
     )
 }
+
+fun TimeModel.toSettingsModel(): SettingsModel {
+    return SettingsModel(
+        id = id,
+        name = name,
+        timeStart = timeStart.toTimeString(),
+        timeGain = timeGain.toTimeString(false)
+    )
+}
+

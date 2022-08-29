@@ -15,8 +15,8 @@ class TimeRepositoryImp
         return timeDao.observeAllTime().map { list -> list.map { it.toTimeModel() } }
     }
 
-    override suspend fun deleteTime(time: TimeModel) {
-        timeDao.deleteTime(time.toEntity())
+    override suspend fun deleteTime(id: Int) {
+        timeDao.deleteTime(timeDao.getTimeById(id))
     }
 
     override suspend fun insertTime(time: TimeModel) {

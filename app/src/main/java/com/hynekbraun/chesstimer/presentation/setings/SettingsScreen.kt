@@ -44,7 +44,7 @@ fun SettingsScreen(
             LazyColumn {
                 items(state.list) { time ->
                     TimeItem(time = time, onDelete = {
-                        viewModel.onEvent(SettingsEvent.OnDelete(time))
+                        viewModel.onEvent(SettingsEvent.OnDelete(time.id))
                     })
                 }
             }
