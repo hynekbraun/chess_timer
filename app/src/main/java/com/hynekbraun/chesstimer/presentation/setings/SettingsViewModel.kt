@@ -5,8 +5,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.hynekbraun.chesstimer.domain.TimeModel
 import com.hynekbraun.chesstimer.domain.TimeRepository
-import com.hynekbraun.chesstimer.presentation.setings.addtimer.util.AddTimerState
+import com.hynekbraun.chesstimer.presentation.setings.util.SettingsEvent
 import com.hynekbraun.chesstimer.presentation.setings.util.SettingsState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
@@ -21,8 +22,21 @@ class SettingsViewModel @Inject constructor(
     var viewState by mutableStateOf(SettingsState())
         private set
 
+    fun onEvent(event: SettingsEvent){
+        when (event){
+            is SettingsEvent.OnDelete -> deleteTime(event.time)
+            is SettingsEvent.OnTimeSelected -> {}
+        }
+    }
+
     init {
         observeTime()
+    }
+
+    private fun deleteTime(time: TimeModel){
+        viewModelScope.launch {
+            repository.deleteTime(time)
+        }
     }
 
     private fun observeTime() {

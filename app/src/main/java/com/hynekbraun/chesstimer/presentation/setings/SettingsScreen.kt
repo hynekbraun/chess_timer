@@ -15,6 +15,7 @@ import com.hynekbraun.chesstimer.domain.TimeModel
 import com.hynekbraun.chesstimer.presentation.setings.composables.EmptyScreen
 import com.hynekbraun.chesstimer.presentation.setings.composables.TimeItem
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.hynekbraun.chesstimer.presentation.setings.util.SettingsEvent
 
 @Composable
 fun SettingsScreen(
@@ -42,8 +43,9 @@ fun SettingsScreen(
         } else {
             LazyColumn {
                 items(state.list) { time ->
-                    TimeItem(time = time) {
-                    }
+                    TimeItem(time = time, onDelete = {
+                        viewModel.onEvent(SettingsEvent.OnDelete(time))
+                    })
                 }
             }
         }
