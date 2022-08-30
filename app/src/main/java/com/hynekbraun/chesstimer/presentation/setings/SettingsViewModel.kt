@@ -4,6 +4,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hynekbraun.chesstimer.data.local.timedatastore.TimeDataStore
@@ -14,6 +15,7 @@ import com.hynekbraun.chesstimer.presentation.setings.util.SettingsEvent
 import com.hynekbraun.chesstimer.presentation.setings.util.SettingsModel
 import com.hynekbraun.chesstimer.presentation.setings.util.SettingsState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -27,7 +29,6 @@ class SettingsViewModel @Inject constructor(
 
     var viewState by mutableStateOf(SettingsState())
         private set
-
 
     init {
         findSelectedTime()
@@ -69,10 +70,14 @@ class SettingsViewModel @Inject constructor(
 
     private fun findSelectedTime() {
         viewModelScope.launch {
-            timeDataStore.selectedTime.collect {
-                repository.getTimeById(it).collect { result ->
-                    viewState = viewState.copy(selectedItem = result.toSettingsModel())
+            try {
+                timeDataStore.selectedTime.collect {
+                    repository.getTimeById(it).collect { result ->
+                        viewState = viewState.copy(selectedItem = result.toSettingsModel())
+                    }
                 }
+            }catch (e: Exception){
+                viewState = viewState.copy(selectedItem = null)
             }
         }
     }
