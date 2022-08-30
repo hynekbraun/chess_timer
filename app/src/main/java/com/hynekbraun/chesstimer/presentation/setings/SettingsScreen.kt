@@ -7,6 +7,8 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -29,7 +31,7 @@ fun SettingsScreen(
     Scaffold(
         modifier = modifier, scaffoldState = scaffoldState,
         floatingActionButton = {
-            FloatingActionButton(onClick = {addTimerClicked()}) {
+            FloatingActionButton(onClick = { addTimerClicked() }) {
                 Icon(
                     imageVector = Icons.Default.Add,
                     contentDescription = stringResource(R.string.content_desc_add_time)
@@ -43,9 +45,14 @@ fun SettingsScreen(
         } else {
             LazyColumn {
                 items(state.list) { time ->
-                    TimeItem(time = time, onDelete = {
-                        viewModel.onEvent(SettingsEvent.OnDelete(time.id))
-                    })
+                    TimeItem(
+                        time = time, onDelete = {
+                            viewModel.onEvent(SettingsEvent.OnDelete(time.id))
+                        },
+                        isSelected = time == state.selectedItem,
+                        onSelected = { viewModel.onEvent(SettingsEvent.OnTimeSelected(time.id)) }
+                    )
+
                 }
             }
         }

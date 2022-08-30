@@ -1,6 +1,6 @@
 package com.hynekbraun.chesstimer.domain
 
-import com.hynekbraun.chesstimer.data.local.TimeEntity
+import com.hynekbraun.chesstimer.data.local.timedatabase.TimeEntity
 import com.hynekbraun.chesstimer.presentation.setings.util.SettingsModel
 import com.hynekbraun.chesstimer.presentation.toTimeString
 

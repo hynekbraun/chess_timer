@@ -1,4 +1,4 @@
-package com.hynekbraun.chesstimer.data.local
+package com.hynekbraun.chesstimer.data.local.timedatabase
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

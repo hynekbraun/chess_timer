@@ -10,4 +10,6 @@ interface TimeRepository {
     suspend fun deleteTime(id: Int)
 
     suspend fun insertTime(time: TimeModel)
+
+    fun getTimeById(id: Int): Flow<TimeModel>
 }

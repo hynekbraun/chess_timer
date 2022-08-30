@@ -1,5 +1,7 @@
 package com.hynekbraun.chesstimer.presentation.setings.composables
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -24,12 +26,16 @@ import com.hynekbraun.chesstimer.presentation.setings.util.SettingsModel
 fun TimeItem(
     modifier: Modifier = Modifier,
     time: SettingsModel,
-    onDelete: () -> Unit
+    onDelete: () -> Unit,
+    isSelected: Boolean = false,
+    onSelected: () -> Unit
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .padding(4.dp),
+            .background(if (isSelected) Color.LightGray else MaterialTheme.colors.background)
+            .padding(4.dp)
+            .clickable { onSelected() },
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -49,7 +55,7 @@ fun TimeItem(
                 ),
                 fontSize = 12.sp,
                 fontWeight = FontWeight.Light,
-                color = Color.Gray
+                color = Color.DarkGray
             )
             Spacer(modifier = Modifier.width(4.dp))
             IconButton(onClick = { onDelete() }) {
@@ -65,15 +71,17 @@ fun TimeItem(
 @Preview
 @Composable
 fun TimeItemPreview() {
-    Box(modifier = Modifier.fillMaxSize()) {
+    Surface() {
         TimeItem(
             time = SettingsModel(
                 id = 0,
                 name = "Some name asd as dasd as d",
                 timeStart = "00:00:00",
-                timeGain = "00:00:00"
-            )
-        ) {
-        }
+                timeGain = "00:00:00",
+            ),
+            onDelete = {},
+            isSelected = true,
+            onSelected = {}
+        )
     }
 }
