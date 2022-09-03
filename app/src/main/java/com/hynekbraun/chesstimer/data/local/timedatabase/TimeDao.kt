@@ -1,4 +1,4 @@
-package com.hynekbraun.chesstimer.data.local
+package com.hynekbraun.chesstimer.data.local.timedatabase
 
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
@@ -14,4 +14,7 @@ interface TimeDao {
 
     @Delete
     suspend fun deleteTime(time: TimeEntity)
+
+    @Query("SELECT * FROM chess_time WHERE id = :id")
+    fun getTimeById(id: Int): Flow<TimeEntity>
 }

@@ -1,9 +1,8 @@
-package com.hynekbraun.chesstimer.data.local
+package com.hynekbraun.chesstimer.data.local.timedatabase
 
-import androidx.room.Dao
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.hynekbraun.chesstimer.data.local.TimeDatabase.Companion.DATABASE_VERSION
+import com.hynekbraun.chesstimer.data.local.timedatabase.TimeDatabase.Companion.DATABASE_VERSION
 
 @Database(
     entities = [TimeEntity::class],

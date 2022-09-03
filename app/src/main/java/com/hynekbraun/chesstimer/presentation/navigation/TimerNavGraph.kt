@@ -35,7 +35,12 @@ fun TimerNavGraph(
         }
         composable(TimerNavDestinations.ADD_TIMER) {
             AddTimerScreen(
-                viewModel = hiltViewModel()
+                viewModel = hiltViewModel(),
+                onNavigateBack = {
+                    navController.navigate(TimerNavDestinations.SETTINGS_ROUTE) {
+                        popUpTo(TimerNavDestinations.SETTINGS_ROUTE)
+                    }
+                }
             )
         }
     }

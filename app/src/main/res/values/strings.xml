@@ -2,7 +2,7 @@
     <string name="app_name">Chess Timer</string>
 
     //Placeholders
-    <string name="time_placeholder_zero_zero">00:00</string>
+    <string name="time_placeholder_zero_zero_zero">00:00:00</string>
     <string name="time_placeholder_zero">00</string>
 
     //Content desc
@@ -21,6 +21,9 @@
     //Add timer screen
     <string name="add_timer_screen_start_time">Starting time</string>
     <string name="add_timer_screen_increment">Increment</string>
+
+    //Settings screen
+    <string name="settings_screen_time">%1$s | %2$s</string>
 
     //Empty screen
     <string name="empty_time_settings">No saved time option</string>

@@ -49,6 +49,10 @@ android {
 
 dependencies {
 
+    // DataStore
+    implementation("androidx.datastore:datastore-preferences:$datastore_version")
+
+
     //Navigation
     implementation "androidx.hilt:hilt-navigation-compose:$nav_version"
 

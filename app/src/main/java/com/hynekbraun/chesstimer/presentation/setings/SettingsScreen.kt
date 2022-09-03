@@ -7,6 +7,8 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -15,20 +17,21 @@ import com.hynekbraun.chesstimer.domain.TimeModel
 import com.hynekbraun.chesstimer.presentation.setings.composables.EmptyScreen
 import com.hynekbraun.chesstimer.presentation.setings.composables.TimeItem
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.hynekbraun.chesstimer.presentation.setings.util.SettingsEvent
 
 @Composable
 fun SettingsScreen(
     modifier: Modifier = Modifier,
-    timeList: List<TimeModel> = emptyList(),
     viewModel: SettingsViewModel = viewModel(),
     addTimerClicked: () -> Unit
 ) {
     val scaffoldState = rememberScaffoldState()
+    val state = viewModel.viewState
 
     Scaffold(
         modifier = modifier, scaffoldState = scaffoldState,
         floatingActionButton = {
-            FloatingActionButton(onClick = {addTimerClicked()}) {
+            FloatingActionButton(onClick = { addTimerClicked() }) {
                 Icon(
                     imageVector = Icons.Default.Add,
                     contentDescription = stringResource(R.string.content_desc_add_time)
@@ -37,33 +40,21 @@ fun SettingsScreen(
         },
         floatingActionButtonPosition = FabPosition.End
     ) {
-        if (timeList.isEmpty()) {
+        if (state.list.isEmpty()) {
             EmptyScreen()
         } else {
             LazyColumn {
-                items(timeList) { time ->
-                    TimeItem(time = time) {
-                    }
+                items(state.list) { time ->
+                    TimeItem(
+                        time = time, onDelete = {
+                            viewModel.onEvent(SettingsEvent.OnDelete(time.id))
+                        },
+                        isSelected = time == state.selectedItem,
+                        onSelected = { viewModel.onEvent(SettingsEvent.OnTimeSelected(time.id)) }
+                    )
+
                 }
             }
         }
     }
 }
-
-@Preview
-@Composable
-fun SettingsScreenPreview() {
-    val dummyList = listOf(
-        TimeModel(0, "asdasd", 0L, 0L),
-        TimeModel(0, "asdasd", 0L, 0L),
-        TimeModel(0, "asdasd", 0L, 0L),
-        TimeModel(0, "asdasd", 0L, 0L),
-        TimeModel(0, "asdasd", 0L, 0L),
-        TimeModel(0, "asdasd", 0L, 0L),
-        TimeModel(0, "asdasd", 0L, 0L),
-    )
-    Surface(modifier = Modifier.fillMaxSize()) {
-        SettingsScreen(timeList = dummyList, addTimerClicked = {})
-    }
-}
-
