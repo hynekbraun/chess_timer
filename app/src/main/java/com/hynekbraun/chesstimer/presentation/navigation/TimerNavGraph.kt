@@ -10,6 +10,7 @@ import androidx.navigation.compose.rememberNavController
 import com.hynekbraun.chesstimer.presentation.setings.SettingsScreen
 import com.hynekbraun.chesstimer.presentation.setings.addtimer.AddTimerScreen
 import com.hynekbraun.chesstimer.presentation.timer.TimerScreen
+import java.sql.Time
 
 @Composable
 fun TimerNavGraph(
@@ -31,6 +32,11 @@ fun TimerNavGraph(
             SettingsScreen(viewModel = hiltViewModel(),
                 addTimerClicked = {
                     navController.navigate(TimerNavDestinations.ADD_TIMER)
+                },
+                onNavigateBack = {
+                    navController.navigate(TimerNavDestinations.TIMER_ROUTE) {
+                        popUpTo(TimerNavDestinations.TIMER_ROUTE)
+                    }
                 })
         }
         composable(TimerNavDestinations.ADD_TIMER) {

@@ -74,13 +74,11 @@ class TimerViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 dataStore.selectedTime.collect {
-                    repository.getTimeById(it).collect { result ->
-                        currentTimer = result
-                        timeLeft1.value = currentTimer.timeStart
-                        time1AsString.value = longToString(timeLeft1.value)
-                        timeLeft2.value = currentTimer.timeStart
-                        time2AsString.value = longToString(timeLeft2.value)
-                    }
+                    currentTimer = (repository.getTimeById(it) ?: InitialTimer.initialTimer)
+                    timeLeft1.value = currentTimer.timeStart
+                    time1AsString.value = longToString(timeLeft1.value)
+                    timeLeft2.value = currentTimer.timeStart
+                    time2AsString.value = longToString(timeLeft2.value)
                 }
             } catch (e: Exception) {
             }
@@ -102,7 +100,6 @@ class TimerViewModel @Inject constructor(
                         //Add some toast that player 2 ran out of time
                         resetTimer()
                     }
-
                 }
                 timer2.start()
                 currentTurn = CurrentTurn.TWO

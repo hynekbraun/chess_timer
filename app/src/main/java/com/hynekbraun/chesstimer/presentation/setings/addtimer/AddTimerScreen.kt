@@ -11,6 +11,7 @@ import androidx.compose.ui.unit.dp
 import com.hynekbraun.chesstimer.R
 import com.hynekbraun.chesstimer.presentation.setings.addtimer.composables.TimeDesc
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.hynekbraun.chesstimer.presentation.composables.CustomTopAppBar
 import com.hynekbraun.chesstimer.presentation.setings.addtimer.util.AddTimerEvent
 
 @Composable
@@ -19,70 +20,80 @@ fun AddTimerScreen(
     viewModel: AddTimerViewModel = viewModel(),
     onNavigateBack: () -> Unit
 ) {
-    val viewState = viewModel.timerState
-    Column(modifier = modifier.padding(8.dp)) {
-        TextField(
-            modifier = Modifier.fillMaxWidth(),
-            value = viewState.name,
-            onValueChange = { viewModel.onEvent(AddTimerEvent.ChangeName(it)) },
-            placeholder = { Text(text = stringResource(R.string.name)) },
-            singleLine = true
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-        Text(
-            text = stringResource(R.string.add_timer_screen_start_time),
-            style = MaterialTheme.typography.h4
-        )
-        Spacer(modifier = Modifier.height(4.dp))
-        Row(
-            modifier = Modifier
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceEvenly
-        ) {
-            TimeDesc(
-                onValueChange = { viewModel.onEvent(AddTimerEvent.TimeHoursChanged(it)) },
-                value = viewState.hours,
-                measurement = stringResource(R.string.hours)
-            )
-            TimeDesc(
-                onValueChange = { viewModel.onEvent(AddTimerEvent.TimeMinutesChanged(it)) },
-                value = viewState.minutes,
-                measurement = stringResource(R.string.minutes)
-            )
-            TimeDesc(
-                onValueChange = { viewModel.onEvent(AddTimerEvent.TimeSecondsChanged(it)) },
-                value = viewState.seconds,
-                measurement = stringResource(R.string.seconds)
-            )
-        }
-        Spacer(modifier = Modifier.height(8.dp))
-        Text(
-            text = stringResource(R.string.add_timer_screen_increment),
-            style = MaterialTheme.typography.h4
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-        Row(
-            modifier = Modifier
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceEvenly
-        ) {
-            TimeDesc(
-                onValueChange = { viewModel.onEvent(AddTimerEvent.IncrementMinutesChanged(it)) },
-                value = viewState.incrementMinutes,
-                measurement = stringResource(R.string.minutes)
-            )
-            TimeDesc(
-                onValueChange = { viewModel.onEvent(AddTimerEvent.IncrementSecondsChanges(it)) },
-                value = viewState.incrementSeconds,
-                measurement = stringResource(R.string.seconds)
-            )
-        }
-        Spacer(modifier = Modifier.height(8.dp))
+    val scaffoldState = rememberScaffoldState()
 
-        Button(onClick = {
-            viewModel.onEvent(AddTimerEvent.SaveTime)
-            onNavigateBack()
-        }) {
+    Scaffold(
+        scaffoldState = scaffoldState,
+        topBar = {
+            CustomTopAppBar(
+                onNavigateBack = { onNavigateBack() })
+        }
+    ) {
+        val viewState = viewModel.timerState
+        Column(modifier = modifier.padding(8.dp)) {
+            TextField(
+                modifier = Modifier.fillMaxWidth(),
+                value = viewState.name,
+                onValueChange = { viewModel.onEvent(AddTimerEvent.ChangeName(it)) },
+                placeholder = { Text(text = stringResource(R.string.name)) },
+                singleLine = true
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = stringResource(R.string.add_timer_screen_start_time),
+                style = MaterialTheme.typography.h4
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                TimeDesc(
+                    onValueChange = { viewModel.onEvent(AddTimerEvent.TimeHoursChanged(it)) },
+                    value = viewState.hours,
+                    measurement = stringResource(R.string.hours)
+                )
+                TimeDesc(
+                    onValueChange = { viewModel.onEvent(AddTimerEvent.TimeMinutesChanged(it)) },
+                    value = viewState.minutes,
+                    measurement = stringResource(R.string.minutes)
+                )
+                TimeDesc(
+                    onValueChange = { viewModel.onEvent(AddTimerEvent.TimeSecondsChanged(it)) },
+                    value = viewState.seconds,
+                    measurement = stringResource(R.string.seconds)
+                )
+            }
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = stringResource(R.string.add_timer_screen_increment),
+                style = MaterialTheme.typography.h4
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                TimeDesc(
+                    onValueChange = { viewModel.onEvent(AddTimerEvent.IncrementMinutesChanged(it)) },
+                    value = viewState.incrementMinutes,
+                    measurement = stringResource(R.string.minutes)
+                )
+                TimeDesc(
+                    onValueChange = { viewModel.onEvent(AddTimerEvent.IncrementSecondsChanges(it)) },
+                    value = viewState.incrementSeconds,
+                    measurement = stringResource(R.string.seconds)
+                )
+            }
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Button(onClick = {
+                viewModel.onEvent(AddTimerEvent.SaveTime)
+                onNavigateBack()
+            }) {
+            }
         }
     }
 }

@@ -16,5 +16,5 @@ interface TimeDao {
     suspend fun deleteTime(time: TimeEntity)
 
     @Query("SELECT * FROM chess_time WHERE id = :id")
-    fun getTimeById(id: Int): Flow<TimeEntity>
+    suspend fun getTimeById(id: Int): TimeEntity
 }
