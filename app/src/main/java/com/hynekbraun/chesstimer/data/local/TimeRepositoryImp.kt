@@ -6,7 +6,6 @@ import com.hynekbraun.chesstimer.domain.TimeModel
 import com.hynekbraun.chesstimer.domain.TimeRepository
 import com.hynekbraun.chesstimer.domain.toEntity
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -19,16 +18,18 @@ class TimeRepositoryImp
     }
 
     override suspend fun deleteTime(id: Int) {
-        timeDao.getTimeById(id).collect {
-            timeDao.deleteTime(it)
-        }
+        timeDao.deleteTime(timeDao.getTimeById(id))
     }
 
     override suspend fun insertTime(time: TimeModel) {
         timeDao.insertTime(time.toEntity())
     }
 
-    override fun getTimeById(id: Int): Flow<TimeModel> {
-        return timeDao.getTimeById(id).map { it.toTimeModel() }
+    override suspend fun getTimeById(id: Int): TimeModel? {
+        return try {
+            timeDao.getTimeById(id).toTimeModel()
+        } catch (e: Exception) {
+            null
+        }
     }
 }
