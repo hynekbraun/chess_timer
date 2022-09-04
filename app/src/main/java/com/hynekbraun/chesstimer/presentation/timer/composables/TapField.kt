@@ -2,12 +2,14 @@ package com.hynekbraun.chesstimer.presentation.timer.composables
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
@@ -17,7 +19,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.hynekbraun.chesstimer.R
 
-//Disable ripple effect later
 
 @Composable
 fun TapField(
@@ -28,7 +29,10 @@ fun TapField(
     onFieldClick: () -> Unit
 ) {
     Box(
-        modifier = modifier.clickable { onFieldClick() },
+        modifier = modifier.clickable(
+            interactionSource = remember { MutableInteractionSource() },
+            indication = null,
+        ) { onFieldClick() },
         contentAlignment = Alignment.Center,
     ) {
         Text(

@@ -10,6 +10,7 @@ import androidx.lifecycle.viewModelScope
 import com.hynekbraun.chesstimer.data.local.timedatastore.TimeDataStore
 import com.hynekbraun.chesstimer.domain.TimeRepository
 import com.hynekbraun.chesstimer.presentation.timer.util.InitialTimer
+import com.hynekbraun.chesstimer.presentation.timer.util.TimerScreenState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -23,20 +24,19 @@ class TimerViewModel @Inject constructor(
     private val dataStore: TimeDataStore
 ) : ViewModel() {
 
-    var currentTurn = CurrentTurn.NOBODY
+    var state by mutableStateOf(TimerScreenState())
+        private set
 
     private var currentTimer by mutableStateOf(InitialTimer.initialTimer)
 
     //Timer 1
     private val timeLeft1 = mutableStateOf(currentTimer.timeStart)
-    var time1AsString = mutableStateOf(longToString(timeLeft1.value))
-        private set
 
     private var timer1: CountDownTimer = object : CountDownTimer(
         timeLeft1.value, COUNTDOWN_INTERVAL
     ) {
         override fun onTick(p0: Long) {
-            time1AsString.value = longToString(p0)
+            state = state.copy(player1TimeLeft = longToString(p0))
             timeLeft1.value = p0
         }
 
@@ -47,15 +47,13 @@ class TimerViewModel @Inject constructor(
 
     //Timer 2
     private val timeLeft2 = mutableStateOf(currentTimer.timeStart)
-    var time2AsString = mutableStateOf(longToString(timeLeft2.value))
-        private set
 
     private var timer2: CountDownTimer = object : CountDownTimer(
         timeLeft2.value, COUNTDOWN_INTERVAL
     ) {
         override fun onTick(p0: Long) {
             Log.d("TAG", "Millis left 2 on Tick $p0")
-            time2AsString.value = longToString(p0)
+            state = state.copy(player2TimeLeft = longToString(p0))
             timeLeft2.value = p0
             Log.d("LOG", "Time left 2: ${timeLeft2.value}")
         }
@@ -76,9 +74,9 @@ class TimerViewModel @Inject constructor(
                 dataStore.selectedTime.collect {
                     currentTimer = (repository.getTimeById(it) ?: InitialTimer.initialTimer)
                     timeLeft1.value = currentTimer.timeStart
-                    time1AsString.value = longToString(timeLeft1.value)
+                    state = state.copy(player1TimeLeft = longToString(timeLeft1.value))
                     timeLeft2.value = currentTimer.timeStart
-                    time2AsString.value = longToString(timeLeft2.value)
+                    state = state.copy(player2TimeLeft = longToString(timeLeft2.value))
                 }
             } catch (e: Exception) {
             }
@@ -86,13 +84,18 @@ class TimerViewModel @Inject constructor(
     }
 
     fun startTimer() {
-        when (currentTurn) {
+        when (state.currentTurn) {
             CurrentTurn.ONE -> {
                 timer1.cancel()
+                timeLeft1.value = timeLeft1.value.plus(currentTimer.timeGain)
+                state = state.copy(
+                    player1TimeLeft = longToString(timeLeft1.value),
+                    player1Turns = state.player1Turns + 1
+                )
                 timer2 = object : CountDownTimer(timeLeft2.value, COUNTDOWN_INTERVAL) {
                     override fun onTick(p0: Long) {
                         Log.d("TAG", "Millis left 2 on Tick $p0")
-                        time2AsString.value = longToString(p0)
+                        state = state.copy(player2TimeLeft = longToString(p0))
                         timeLeft2.value = p0
                     }
 
@@ -102,15 +105,20 @@ class TimerViewModel @Inject constructor(
                     }
                 }
                 timer2.start()
-                currentTurn = CurrentTurn.TWO
+                state = state.copy(currentTurn = CurrentTurn.TWO)
             }
             CurrentTurn.TWO -> {
                 timer2.cancel()
+                timeLeft2.value = timeLeft2.value.plus(currentTimer.timeGain)
+                state = state.copy(
+                    player2TimeLeft = longToString(timeLeft2.value),
+                    player2Turns = state.player1Turns + 1
+                )
                 timer1 = object : CountDownTimer(
                     timeLeft1.value, COUNTDOWN_INTERVAL
                 ) {
                     override fun onTick(p0: Long) {
-                        time1AsString.value = longToString(p0)
+                        state = state.copy(player1TimeLeft = longToString(p0))
                         timeLeft1.value = p0
                     }
 
@@ -119,7 +127,7 @@ class TimerViewModel @Inject constructor(
                     }
                 }
                 timer1.start()
-                currentTurn = CurrentTurn.ONE
+                state = state.copy(currentTurn = CurrentTurn.ONE)
             }
             CurrentTurn.NOBODY -> {
                 timer1 = object : CountDownTimer(
@@ -127,7 +135,7 @@ class TimerViewModel @Inject constructor(
                 ) {
                     override fun onTick(p0: Long) {
                         Log.d("TAG", "Millis left 1 on Tick $p0")
-                        time1AsString.value = longToString(p0)
+                        state = state.copy(player1TimeLeft = longToString(p0))
                         timeLeft1.value = p0
                         Log.d("LOG", "Time left 1: ${timeLeft1.value}")
                     }
@@ -137,20 +145,24 @@ class TimerViewModel @Inject constructor(
                     }
                 }
                 timer1.start()
-                currentTurn = CurrentTurn.ONE
+                state = state.copy(currentTurn = CurrentTurn.ONE)
             }
         }
     }
 
     fun resetTimer() {
         Log.d("TAG", "Reset Timer Triggered")
-        currentTurn = CurrentTurn.NOBODY
         timer1.cancel()
-        timeLeft1.value = currentTimer.timeStart
-        time1AsString.value = longToString(timeLeft1.value)
         timer2.cancel()
+        timeLeft1.value = currentTimer.timeStart
         timeLeft2.value = currentTimer.timeStart
-        time2AsString.value = longToString(timeLeft2.value)
+        state = state.copy(
+            player2TimeLeft = longToString(timeLeft2.value),
+            player1TimeLeft = longToString(timeLeft1.value),
+            player1Turns = 0,
+            player2Turns = 0,
+            currentTurn = CurrentTurn.NOBODY
+        )
     }
 
     private fun longToString(time: Long): String {

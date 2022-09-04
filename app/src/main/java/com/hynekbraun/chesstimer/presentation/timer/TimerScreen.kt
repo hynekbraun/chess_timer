@@ -27,14 +27,14 @@ fun TimerScreen(
                 .background(Color.White),
             rotation = -180f,
             onFieldClick = {
-                if (viewModel.currentTurn != CurrentTurn.TWO)
+                if (viewModel.state.currentTurn != CurrentTurn.TWO)
                     viewModel.startTimer()
             },
-            time = viewModel.time1AsString.value
+            time = viewModel.state.player1TimeLeft
         )
         MiddleBar(
             isActive = false,
-            onSettingsClicked = { onSettingsClicked()},
+            onSettingsClicked = { onSettingsClicked() },
             onPauseClicked = {},
             onResetClicked = {
                 viewModel.resetTimer()
@@ -48,10 +48,10 @@ fun TimerScreen(
                 .fillMaxWidth()
                 .background(Color.Black),
             onFieldClick = {
-                if (viewModel.currentTurn != CurrentTurn.ONE)
+                if (viewModel.state.currentTurn != CurrentTurn.ONE)
                     viewModel.startTimer()
             },
-            time = viewModel.time2AsString.value
+            time = viewModel.state.player2TimeLeft
         )
     }
 }
