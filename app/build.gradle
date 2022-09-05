@@ -48,9 +48,10 @@ android {
 }
 
 dependencies {
-
+    // Accompanist - status bar
+    implementation "com.google.accompanist:accompanist-systemuicontroller:$accompanist_version"
     // DataStore
-    implementation("androidx.datastore:datastore-preferences:$datastore_version")
+    implementation "androidx.datastore:datastore-preferences:$datastore_version"
 
 
     //Navigation

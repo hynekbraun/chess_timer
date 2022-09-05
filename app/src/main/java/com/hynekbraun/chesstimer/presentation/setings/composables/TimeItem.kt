@@ -35,7 +35,7 @@ fun TimeItem(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .background(if (isSelected) Color.LightGray else MaterialTheme.colors.background)
+            .background(if (isSelected) MaterialTheme.colors.secondary else MaterialTheme.colors.background)
             .padding(4.dp)
             .clickable(
                 interactionSource = remember {

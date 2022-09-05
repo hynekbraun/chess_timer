@@ -37,7 +37,7 @@ fun TimeDesc(
             decorationBox = { innerTextField ->
                 Box(
                     Modifier
-                        .background(Color.LightGray, RoundedCornerShape(percent = 30))
+                        .background(MaterialTheme.colors.secondary, RoundedCornerShape(percent = 30))
                         .padding(16.dp)
                 ) {
                     if (value.isEmpty()) {
