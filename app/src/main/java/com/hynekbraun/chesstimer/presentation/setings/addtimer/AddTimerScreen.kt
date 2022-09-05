@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -33,10 +34,11 @@ fun AddTimerScreen(
         Column(modifier = modifier.padding(8.dp)) {
             TextField(
                 modifier = Modifier.fillMaxWidth(),
+                textStyle = MaterialTheme.typography.h5,
                 value = viewState.name,
                 onValueChange = { viewModel.onEvent(AddTimerEvent.ChangeName(it)) },
                 placeholder = { Text(text = stringResource(R.string.name)) },
-                singleLine = true
+                singleLine = true,
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
@@ -89,10 +91,16 @@ fun AddTimerScreen(
             }
             Spacer(modifier = Modifier.height(8.dp))
 
-            Button(onClick = {
-                viewModel.onEvent(AddTimerEvent.SaveTime)
-                onNavigateBack()
-            }) {
+            Button(
+                modifier = Modifier.align(CenterHorizontally),
+                onClick = {
+                    viewModel.onEvent(AddTimerEvent.SaveTime)
+                    onNavigateBack()
+                }) {
+                Text(
+                    text = stringResource(R.string.save_uppercase),
+                    style = MaterialTheme.typography.button
+                )
             }
         }
     }
