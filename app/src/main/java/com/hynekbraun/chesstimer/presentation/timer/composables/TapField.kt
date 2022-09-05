@@ -40,12 +40,13 @@ fun TapField(
     ) {
         Text(
             text = time,
-            style = MaterialTheme.typography.h3,
+            style = MaterialTheme.typography.h2,
             color = textColor,
         )
         Text(
             text = stringResource(id = R.string.timer_moves_count, moves),
             modifier = Modifier.align(Alignment.BottomCenter),
+            style = MaterialTheme.typography.subtitle1,
             color = textColor
         )
     }

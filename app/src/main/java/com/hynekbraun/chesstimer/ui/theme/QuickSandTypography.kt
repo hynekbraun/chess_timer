@@ -79,12 +79,12 @@ val QuickSandTypography = Typography(
     ),
     caption = TextStyle(
         fontFamily = QuickSand,
-        fontWeight = Normal,
+        fontWeight = Light,
         fontSize = 12.sp
     ),
     overline = TextStyle(
         fontFamily = QuickSand,
         fontWeight = Normal,
         fontSize = 10.sp
-    ),
+    )
 )

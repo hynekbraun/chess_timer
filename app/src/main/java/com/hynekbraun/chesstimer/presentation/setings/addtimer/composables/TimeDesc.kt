@@ -49,7 +49,7 @@ fun TimeDesc(
         )
         Text(
             text = measurement,
-            style = MaterialTheme.typography.body2
+            style = MaterialTheme.typography.body1
         )
     }
 }

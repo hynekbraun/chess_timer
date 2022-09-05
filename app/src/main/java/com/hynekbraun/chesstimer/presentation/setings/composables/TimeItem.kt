@@ -2,11 +2,13 @@ package com.hynekbraun.chesstimer.presentation.setings.composables
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -35,7 +37,12 @@ fun TimeItem(
             .fillMaxWidth()
             .background(if (isSelected) Color.LightGray else MaterialTheme.colors.background)
             .padding(4.dp)
-            .clickable { onSelected() },
+            .clickable(
+                interactionSource = remember {
+                    MutableInteractionSource()
+                },
+                indication = null
+            ) { onSelected() },
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -53,9 +60,7 @@ fun TimeItem(
                     time.timeStart,
                     time.timeGain
                 ),
-                fontSize = 12.sp,
-                fontWeight = FontWeight.Light,
-                color = Color.DarkGray
+                style = MaterialTheme.typography.caption
             )
             Spacer(modifier = Modifier.width(4.dp))
             IconButton(onClick = { onDelete() }) {
