@@ -90,7 +90,7 @@ class TimerViewModel @Inject constructor(
                 timeLeft1.value = timeLeft1.value.plus(currentTimer.timeGain)
                 state = state.copy(
                     player1TimeLeft = longToString(timeLeft1.value),
-                    player1Turns = state.player1Turns + 1
+                    player1Moves = state.player1Moves + 1
                 )
                 timer2 = object : CountDownTimer(timeLeft2.value, COUNTDOWN_INTERVAL) {
                     override fun onTick(p0: Long) {
@@ -112,7 +112,7 @@ class TimerViewModel @Inject constructor(
                 timeLeft2.value = timeLeft2.value.plus(currentTimer.timeGain)
                 state = state.copy(
                     player2TimeLeft = longToString(timeLeft2.value),
-                    player2Turns = state.player1Turns + 1
+                    player2Moves = state.player2Moves + 1
                 )
                 timer1 = object : CountDownTimer(
                     timeLeft1.value, COUNTDOWN_INTERVAL
@@ -134,10 +134,8 @@ class TimerViewModel @Inject constructor(
                     timeLeft1.value, COUNTDOWN_INTERVAL
                 ) {
                     override fun onTick(p0: Long) {
-                        Log.d("TAG", "Millis left 1 on Tick $p0")
                         state = state.copy(player1TimeLeft = longToString(p0))
                         timeLeft1.value = p0
-                        Log.d("LOG", "Time left 1: ${timeLeft1.value}")
                     }
 
                     override fun onFinish() {
@@ -159,8 +157,8 @@ class TimerViewModel @Inject constructor(
         state = state.copy(
             player2TimeLeft = longToString(timeLeft2.value),
             player1TimeLeft = longToString(timeLeft1.value),
-            player1Turns = 0,
-            player2Turns = 0,
+            player1Moves = 0,
+            player2Moves = 0,
             currentTurn = CurrentTurn.NOBODY
         )
     }

@@ -30,5 +30,8 @@
     //Empty screen
     <string name="empty_time_settings">No saved time option</string>
 
+    //Timer screen
+    <string name="timer_moves_count">Moves %1$d</string>
+
 
 </resources>
