@@ -26,20 +26,27 @@ fun TapField(
     time: String = stringResource(R.string.time_placeholder_zero_zero_zero),
     textColor: Color,
     rotation: Float = 0f,
-    onFieldClick: () -> Unit
+    onFieldClick: () -> Unit,
+    moves: Int
 ) {
     Box(
-        modifier = modifier.clickable(
-            interactionSource = remember { MutableInteractionSource() },
-            indication = null,
-        ) { onFieldClick() },
+        modifier = modifier
+            .clickable(
+                interactionSource = remember { MutableInteractionSource() },
+                indication = null,
+            ) { onFieldClick() }
+            .rotate(rotation),
         contentAlignment = Alignment.Center,
     ) {
         Text(
             text = time,
             style = MaterialTheme.typography.h3,
             color = textColor,
-            modifier = Modifier.rotate(rotation)
+        )
+        Text(
+            text = stringResource(id = R.string.timer_moves_count, moves),
+            modifier = Modifier.align(Alignment.BottomCenter),
+            color = textColor
         )
     }
 }
@@ -55,6 +62,7 @@ fun TapFieldPreview() {
                 Color.Black
             ),
         rotation = -180f,
-        onFieldClick = {}
+        onFieldClick = {},
+        moves = 5
     )
 }
