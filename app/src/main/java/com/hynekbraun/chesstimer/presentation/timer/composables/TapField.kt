@@ -6,6 +6,7 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -35,7 +36,8 @@ fun TapField(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = null,
             ) { onFieldClick() }
-            .rotate(rotation),
+            .rotate(rotation)
+            .padding(8.dp),
         contentAlignment = Alignment.Center,
     ) {
         Text(
