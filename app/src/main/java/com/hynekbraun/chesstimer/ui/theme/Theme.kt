@@ -37,7 +37,7 @@ fun ChessTimerTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Compos
 
     MaterialTheme(
         colors = colors,
-        typography = Typography,
+        typography = QuickSandTypography,
         shapes = Shapes,
         content = content
     )
