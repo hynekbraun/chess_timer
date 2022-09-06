@@ -33,6 +33,8 @@
 
     //Timer screen
     <string name="timer_moves_count">Moves: %1$d</string>
+    <string name="settings_toast_delete_sucessfull">Timer successfully deleted</string>
+    <string name="undo">Undo</string>
 
 
 </resources>
