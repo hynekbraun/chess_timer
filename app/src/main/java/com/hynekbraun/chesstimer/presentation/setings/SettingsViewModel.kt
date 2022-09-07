@@ -6,12 +6,17 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hynekbraun.chesstimer.data.local.timedatastore.TimeDataStore
+import com.hynekbraun.chesstimer.domain.TimeModel
 import com.hynekbraun.chesstimer.domain.TimeRepository
 import com.hynekbraun.chesstimer.domain.toSettingsModel
 import com.hynekbraun.chesstimer.presentation.setings.util.SettingsEvent
+import com.hynekbraun.chesstimer.presentation.setings.util.SettingsModel
 import com.hynekbraun.chesstimer.presentation.setings.util.SettingsState
+import com.hynekbraun.chesstimer.presentation.setings.util.SettingsToastEventHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,6 +28,11 @@ class SettingsViewModel @Inject constructor(
 
     var viewState by mutableStateOf(SettingsState())
         private set
+
+    private val eventChannel = Channel<SettingsToastEventHandler>()
+    val toastFlow = eventChannel.receiveAsFlow()
+
+    private var lastTimer: TimeModel? = null
 
     init {
         findSelectedTime()
@@ -42,12 +52,15 @@ class SettingsViewModel @Inject constructor(
                     }
                 }
             }
+            SettingsEvent.UndoDelete -> addTimer()
         }
     }
 
     private fun deleteTime(id: Int) {
         viewModelScope.launch {
+            lastTimer = repository.getTimeById(id)
             repository.deleteTime(id)
+            eventChannel.send(SettingsToastEventHandler.OnDeleteEvent())
         }
     }
 
@@ -69,6 +82,14 @@ class SettingsViewModel @Inject constructor(
                 }
             } catch (e: Exception) {
                 viewState = viewState.copy(selectedItem = null)
+            }
+        }
+    }
+
+    private fun addTimer() {
+        viewModelScope.launch {
+            lastTimer?.let {
+                repository.insertTime(it)
             }
         }
     }
